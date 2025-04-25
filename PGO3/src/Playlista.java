@@ -1,29 +1,32 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Playlista {
-    private Map<String, List<String>> playlisty;
+    private List<String> nazwyPlaylist;
+    private List<List<String>> utworyPlaylist;
 
     public Playlista() {
-        this.playlisty = new HashMap<>();
+        this.nazwyPlaylist = new ArrayList<>();
+        this.utworyPlaylist = new ArrayList<>();
     }
 
     public void utworzPlayliste(String nazwaPlaylisty) {
-        playlisty.put(nazwaPlaylisty, new ArrayList<>());
+        nazwyPlaylist.add(nazwaPlaylisty);
+        utworyPlaylist.add(new ArrayList<>());
     }
 
     public void dodajUtworDoPlaylisty(String utwor, String nazwaPlaylisty) {
-        if (playlisty.containsKey(nazwaPlaylisty)) {
-            playlisty.get(nazwaPlaylisty).add(utwor);
+        int index = nazwyPlaylist.indexOf(nazwaPlaylisty);
+        if (index != -1) {
+            utworyPlaylist.get(index).add(utwor);
         }
     }
 
     public void wyswietlPlayliste(String nazwaPlaylisty) {
-        if (playlisty.containsKey(nazwaPlaylisty)) {
+        int index = nazwyPlaylist.indexOf(nazwaPlaylisty);
+        if (index != -1) {
             System.out.println("Playlista: " + nazwaPlaylisty);
-            for (String utwor : playlisty.get(nazwaPlaylisty)) {
+            for (String utwor : utworyPlaylist.get(index)) {
                 System.out.println("- " + utwor);
             }
         }
@@ -31,18 +34,18 @@ public class Playlista {
 
     public void wyswietlWszystkiePlaylisty() {
         System.out.println("Wszystkie playlisty:");
-        for (String nazwa : playlisty.keySet()) {
+        for (String nazwa : nazwyPlaylist) {
             System.out.println("- " + nazwa);
         }
     }
 
     public void usunUtworZPlaylisty(String utwor) {
-        for (List<String> lista : playlisty.values()) {
+        for (List<String> lista : utworyPlaylist) {
             lista.remove(utwor);
         }
     }
 
     public int getLiczbaPlaylist() {
-        return playlisty.size();
+        return nazwyPlaylist.size();
     }
 }
